@@ -17,6 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSLog(@"这是一个新的分支，我要测试");
+    NSLog(@"这是第二个分支");
     // Do any additional setup after loading the view, typically from a nib.
 }
 
