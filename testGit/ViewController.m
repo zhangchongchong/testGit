@@ -18,6 +18,7 @@
     [super viewDidLoad];
     NSLog(@"这是一个新的分支，我要测试");
     NSLog(@"这是第二个分支");
+    NSLog(@"重新测试一下分支合并");
     // Do any additional setup after loading the view, typically from a nib.
 }
 
