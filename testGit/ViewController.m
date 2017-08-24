@@ -14,22 +14,42 @@
 #import "SecondViewController.h"
 #import <MBProgressHUD.h>
 #import <CJSegmentControl.h>
+#import <WebKit/WebKit.h>
+#import <JavaScriptCore/JavaScriptCore.h>
+@protocol JSObjectDelegate <JSExport>
+- (void)callCamera;
+- (void)share:(NSArray *)shareString;
+@end
 
- @interface ViewController ()<CJSegmentControlDelegate>
+ @interface ViewController ()<CJSegmentControlDelegate,WKNavigationDelegate,WKUIDelegate>
 {
     
     NSMutableDictionary *_dic ;
 }
 @property (nonatomic,strong)NSString *strongString;
 @property (nonatomic,copy)NSString *copString;
+@property (weak, nonatomic)JSContext *jsContent;
+@property (nonatomic, strong)WKWebView *webview ;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
+//    NSURL *trl = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"html"];
+    
+    
+   
+  //  [self.webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://www.baidu.com"]]];
+    
+  
+   
+    
+    /*
     NSLog(@"这是一个新的分支，我要测试");
     NSLog(@"这是第二个分支");
+    NSLog(@"重新测试一下分支合并");
    
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -54,11 +74,11 @@
     [self.view addSubview:cj];
     
     
+    */
     
     
-    
-//    FirstViewController * fistVc = [[FirstViewController alloc]init];
-//    [self.view addSubview:fistVc.view];
+    FirstViewController * fistVc = [[FirstViewController alloc]init];
+    [self.view addSubview:fistVc.view];
     
     
 //    SecondViewController *svc = [[SecondViewController alloc]init];
@@ -92,9 +112,69 @@
 //    NSArray * errorArray = @[@"123"];
  //   id item = errorArray[2];
     
+     
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+//页面开始加载
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation{
+    NSLog(@"页面开始加载");
+}
+- (void)webView:(WKWebView *)webView didCommitNavigation:(WKNavigation *)navigation{
+    NSLog(@"当内容开始返回时调用");
+    
+    WKFrameInfo *info = [[WKFrameInfo alloc]init];
+    
+}
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation{
+    NSLog(@"网页加载完成");
+}
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error{
+    NSLog(@"网页加载失败");
+    
+}
+
+//- (void)webview 
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    
+    self.jsContent = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    self.jsContent[@"Toyun"] = self;
+    self.jsContent.exceptionHandler = ^(JSContext *context, JSValue *exception) {
+        context.exception = exception;
+        NSLog(@"异常信息:/%@",exception);
+    };
+}
+#pragma mark - JSObjcDelegate
+
+- (void)callCamera {
+    NSLog(@"callCamera");
+    // 获取到照片之后在回调js的方法picCallback把图片传出去
+    JSValue *picCallback = self.jsContent[@"picCallback"];
+    [picCallback callWithArguments:@[@"photos"]];
+}
+
+- (void)share:(NSString *)shareString {
+    NSLog(@"share:%@", shareString);
+    // 分享成功回调js的方法shareCallback
+    JSValue *shareCallback = self.jsContent[@"shareCallback"];
+    [shareCallback callWithArguments:nil];
+}
+- (WKWebView *)webview{
+    
+    if (_webview == nil) {
+        WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+        config.preferences.minimumFontSize = 18;
+        
+        _webview = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) configuration:config];
+        _webview.UIDelegate = self;
+        _webview.navigationDelegate = self;
+        
+        [self.view addSubview:_webview];
+    }
+    return _webview;
+
+}
 - (void)segmentControlSelected:(NSInteger)tag{
     
     NSLog(@"tag = %ld",(long)tag);
@@ -244,7 +324,7 @@
     
     
 }
-#pragma mark - 摇一摇结束
+ #pragma mark - 摇一摇结束
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
 #ifdef DEBUG
     NSLog(@"结束摇一摇");

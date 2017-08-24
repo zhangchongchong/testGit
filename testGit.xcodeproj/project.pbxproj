@@ -22,6 +22,7 @@
 		97E854AB1F49638A00697B8A /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E854A91F49638A00697B8A /* Crashlytics.framework */; };
 		97E854AE1F4ABB8600697B8A /* RLUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E854AD1F4ABB8600697B8A /* RLUser.m */; };
 		97E854B11F4ABC0E00697B8A /* RLCar.m in Sources */ = {isa = PBXBuildFile; fileRef = 97E854B01F4ABC0E00697B8A /* RLCar.m */; };
+		97F744D31F4D2318009C9154 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 97F744D21F4D2318009C9154 /* index.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,7 @@
 		97E854AD1F4ABB8600697B8A /* RLUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLUser.m; sourceTree = "<group>"; };
 		97E854AF1F4ABC0E00697B8A /* RLCar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RLCar.h; sourceTree = "<group>"; };
 		97E854B01F4ABC0E00697B8A /* RLCar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RLCar.m; sourceTree = "<group>"; };
+		97F744D21F4D2318009C9154 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		D5F20FDDCF2218EEC1E30F9C /* Pods-testGit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-testGit.release.xcconfig"; path = "Pods/Target Support Files/Pods-testGit/Pods-testGit.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,6 +128,7 @@
 		97DB17A81F42C4F600593FFE /* testGit */ = {
 			isa = PBXGroup;
 			children = (
+				97F744D21F4D2318009C9154 /* index.html */,
 				97E854A81F49638A00697B8A /* Fabric.framework */,
 				97E854A91F49638A00697B8A /* Crashlytics.framework */,
 				97DB17AC1F42C4F600593FFE /* AppDelegate.h */,
@@ -306,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97DB17B91F42C4F600593FFE /* LaunchScreen.storyboard in Resources */,
+				97F744D31F4D2318009C9154 /* index.html in Resources */,
 				97DB17B61F42C4F600593FFE /* Assets.xcassets in Resources */,
 				97DB17B41F42C4F600593FFE /* Main.storyboard in Resources */,
 			);
